@@ -1,1 +1,5 @@
 pytest
+safety
+bandit
+pylint
+mypy

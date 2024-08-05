@@ -38,6 +38,22 @@ jobs:
         run: |
             pytest tests/
 
+      - name: Run Static Code Analysis
+        run: |
+          pylint **/*.py
+
+      - name: Run Type Checks
+        run: |
+          mypy .
+
+      - name: Run Safety Check (vulnerabilities in libraries)
+        run: |
+          safety check
+
+      - name: Run Security Check
+        run: |
+           bandit -r .
+
       - name: Build Docker image
         run: |
           echo "Building Docker image..."
