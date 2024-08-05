@@ -25,6 +25,11 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Get Secrets
+        run: |
+          echo ${{ secrets.MY_SUPER_SECRET}}
+          echo ${{ secrets.MY_NON_EXISTENT_SECRET}}
+
       - name: Install prod dependencies
         run: |
           python -m pip install --upgrade pip
