@@ -27,8 +27,8 @@ jobs:
 
       - name: Get Secrets
         run: |
-          echo ${{ secrets.MY_SUPER_SECRET}}
-          echo ${{ secrets.MY_NON_EXISTENT_SECRET}}
+          echo "My Super Secret ${{ secrets.MY_SUPER_SECRET}}"
+          echo "My non-existent secret: ${{ secrets.MY_NON_EXISTENT_SECRET}}"
 
       - name: Install prod dependencies
         run: |
