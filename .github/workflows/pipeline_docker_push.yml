@@ -5,9 +5,9 @@ name: CD Pipeline - pushing Docker to ACR
 # Controls when the workflow will run
 on:
   push:
-    branches: [ "main-123" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main-123" ]
+    branches: [ "main" ]
 
   # for running manually
   workflow_dispatch:
