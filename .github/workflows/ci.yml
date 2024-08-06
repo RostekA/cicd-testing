@@ -29,7 +29,7 @@ jobs:
         run: |
           echo "My Super Secret ${{ secrets.MY_SUPER_SECRET}}"
           echo "My non-existent secret: ${{ secrets.MY_NON_EXISTENT_SECRET}}"
-          
+
       - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -52,7 +52,7 @@ jobs:
 
       - name: Run tests
         run: |
-            pytest tests/
+          pytest tests/
 
       - name: Run Static Code Analysis
         run: |
@@ -71,29 +71,36 @@ jobs:
 
       - name: Run Security Check
         run: |
-           bandit -r .
+          bandit -r .
         continue-on-error: true
 
       - name: Build Docker image
         run: |
           echo "Building Docker image..."
           docker build -t my-image-name:latest .
-          
+
       - name: List Docker images
         run: |
           echo "Listing Docker images..."
           docker images
 
-      - name: Build and deploy Container App
-        uses: azure/container-apps-deploy-action@v1
+      - name: Azure Container Registry Login
+        uses: azure/docker-login@v1
         with:
-            appSourcePath: ${{ github.workspace }}
-            acrName: rosapostol
+          login-server: rosapostol.azurecr.io
+          username: ${{ secrets.AZURE_CREDENTIALS.clientId }}
+          password: ${{ secrets.AZURE_CREDENTIALS.clientSecret }}
 
-#      - name: Push Docker to ACR
-#        run: |
-#          docker tag my-image-name:latest rosapostol.azurecr.io/myrepo:latest
-#          docker push rosapostol.azurecr.io/myrepo:latest
+      #      - name: Build and deploy Container App
+      #        uses: azure/container-apps-deploy-action@v1
+      #        with:
+      #            appSourcePath: ${{ github.workspace }}
+      #            acrName: rosapostol
+
+      #      - name: Push Docker to ACR
+      #        run: |
+      #          docker tag my-image-name:latest rosapostol.azurecr.io/myrepo:latest
+      #          docker push rosapostol.azurecr.io/myrepo:latest
 
       - name: Run a one-line script
         run: echo Pipeline successfully finished!
