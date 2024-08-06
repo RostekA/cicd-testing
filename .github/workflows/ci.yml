@@ -84,10 +84,16 @@ jobs:
           echo "Listing Docker images..."
           docker images
 
-      - name: Push Docker to ACR
-        run: |
-          docker tag my-image-name:latest rosapostol.azurecr.io/myrepo:latest
-          docker push rosapostol.azurecr.io/myrepo:latest
+      - name: Build and deploy Container App
+        uses: azure/container-apps-deploy-action@v1
+        with:
+            appSourcePath: ${{ github.workspace }}
+            acrName: rosapostol
+
+#      - name: Push Docker to ACR
+#        run: |
+#          docker tag my-image-name:latest rosapostol.azurecr.io/myrepo:latest
+#          docker push rosapostol.azurecr.io/myrepo:latest
 
       - name: Run a one-line script
         run: echo Pipeline successfully finished!
