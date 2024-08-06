@@ -84,5 +84,10 @@ jobs:
           echo "Listing Docker images..."
           docker images
 
+      - name: Push Docker to ACR
+        run: |
+          docker tag my-image-name:latest rosapostol.azurecr.io/myrepo:latest
+          docker push rosapostol.azurecr.io/myrepo:latest
+
       - name: Run a one-line script
         run: echo Pipeline successfully finished!
