@@ -36,11 +36,13 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Azure CLI script
-        uses: azure/cli@v2
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az webapp list --output table
+        run: |
+          az webapp list --output table
+#        uses: azure/cli@v2
+#        with:
+#          azcliversion: latest
+#          inlineScript: |
+#            az webapp list --output table
 
       - name: Deploy
         uses: azure/webapps-deploy@v2
