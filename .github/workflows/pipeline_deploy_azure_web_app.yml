@@ -41,6 +41,7 @@ jobs:
           azcliversion: latest
           inlineScript: |
             az account show
+            az webapp list --output table
 
       - name: Deploy
         uses: azure/webapps-deploy@v2
