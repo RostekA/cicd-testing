@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI Pipeline - Testing
+name: Testing
 
 # Controls when the workflow will run
 on:
@@ -36,7 +36,13 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest tests/
+          pytest tests/ --html=report.html
+
+      - name: Upload pytest HTML report
+        uses: actions/upload-artifacts@v2
+        with:
+          name: pytest-report
+          path: report.html
 
       - name: Run Static Code Analysis
         run: |
