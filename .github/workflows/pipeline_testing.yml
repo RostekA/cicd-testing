@@ -12,14 +12,14 @@ on:
   # for running manually
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Test
+        run: |
+          echo "I am on FEATURE"
       - name: Checkout the code
         uses: actions/checkout@v4
 
