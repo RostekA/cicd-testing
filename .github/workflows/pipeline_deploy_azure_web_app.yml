@@ -4,10 +4,10 @@ name: CD Pipeline - Deploying Docker image to Web App
 
 # Controls when the workflow will run
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: ["CD Pipeline - pushing Docker to ACR"]
+    types:
+      - completed
 
   # for running manually
   workflow_dispatch:
@@ -17,19 +17,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      #      - name: Checkout the code
-      #        uses: actions/checkout@v4
-      #
-      #      - name: Set up Python
-      #        uses: actions/setup-python@v2
-      #        with:
-      #          python-version: '3.11'
-
-      #      - name: Get Secrets
-      #        run: |
-      #          echo "My Super Secret ${{ secrets.MY_SUPER_SECRET}}"
-      #          echo "My non-existent secret: ${{ secrets.MY_NON_EXISTENT_SECRET}}"
-
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -55,102 +42,3 @@ jobs:
       #          azcliversion: latest
       #          inlineScript: |
       #            az account show
-
-      #      - name: Install prod dependencies
-      #        run: |
-      #          python -m pip install --upgrade pip
-      #          pip install -r requirements.txt
-      #
-      #      - name: Install dev dependencies
-      #        run: |
-      #          pip install -r requirements-dev.txt
-      #
-      #      - name: Run tests
-      #        run: |
-      #          pytest tests/
-
-      #      - name: Run Static Code Analysis
-      #        run: |
-      #          pylint **/*.py
-      #        continue-on-error: true
-      #
-      #      - name: Run Type Checks
-      #        run: |
-      #          mypy .
-      #        continue-on-error: true
-
-      #      - name: Run Safety Check (vulnerabilities in libraries)
-      #        run: |
-      #          safety check
-      #        continue-on-error: true
-      #
-      #      - name: Run Security Check
-      #        run: |
-      #          bandit -r .
-      #        continue-on-error: true
-
-      #      - name: Build Docker image
-      #        run: |
-      #          echo "Building Docker image..."
-      #          docker build -t my-image-name:latest .
-      #
-      #      - name: List Docker images
-      #        run: |
-      #          echo "Listing Docker images..."
-      #          docker images
-
-      #      - name: 'Docker Login'
-      #        uses: azure/docker-login@v1
-      #        with:
-      #          login-server: ${{ secrets.ACR_ENDPOINT}}
-      #          username: ${{ secrets.ACR_USERNAME }}
-      #          password: ${{ secrets.ACR_PASSWORD }}
-      #
-      #      - name: Build the frontend image and push it to ACR
-      #        uses: docker/build-push-action@v5
-      #        with:
-      #          push: true
-      #          tags: ${{secrets.ACR_ENDPOINT}}/my-image:${{ github.sha }}
-      #          file: aspnet-core-dotnet-core/Dockerfile
-
-      #      - name: Login to ACR
-      #        uses: docker/login-action@v3
-      #        with:
-      #          registry: ${{ secrets.ACR_ENDPOINT }}
-      #          username: ${{ secrets.ACR_USERNAME }}
-      #          password: ${{ secrets.ACR_PASSWORD }}
-      #
-      #      - name: Build and Push Docker image
-      #        run: |
-      #          docker build -t ${{ secrets.ACR_ENDPOINT }}.azurecr.io/my-image-name:latest .
-      #          docker tag ${{ secrets.IMAGE_NAME }}:latest ${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:latest
-      #          docker push ${{ secrets.ACR_ENDPOINT }}.azurecr.io/my-image-name:latest
-
-
-
-      #      - name: Build and push
-      #        uses: docker/build-push-action@v6
-      #        with:
-      #          push: true
-      #          tags: user/app:latest
-
-      #      - name: Azure Container Registry Login
-      #        uses: azure/docker-login@v1
-      #        with:
-      #          login-server: rosapostol.azurecr.io
-      #          username: ${{ secrets.AZURE_CREDENTIALS.clientId }}
-      #          password: ${{ secrets.AZURE_CREDENTIALS.clientSecret }}
-
-      #      - name: Build and deploy Container App
-      #        uses: azure/container-apps-deploy-action@v1
-      #        with:
-      #            appSourcePath: ${{ github.workspace }}
-      #            acrName: rosapostol
-
-      #      - name: Push Docker to ACR
-      #        run: |
-      #          docker tag my-image-name:latest rosapostol.azurecr.io/myrepo:latest
-      #          docker push rosapostol.azurecr.io/myrepo:latest
-
-#      - name: Run a one-line script
-#        run: echo Pipeline successfully finished!
