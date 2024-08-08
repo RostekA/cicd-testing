@@ -20,6 +20,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Test
+        run: |
+          echo "I am on MAIN"
       - name: Checkout the code
         uses: actions/checkout@v4
 
